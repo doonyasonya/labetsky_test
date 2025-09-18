@@ -52,6 +52,17 @@ python scripts/test_upload.py
 python scripts/check_ci.py
 ```
 
+### monitor_ci.py
+Мониторинг статуса GitHub Actions:
+- Проверка локального Git статуса
+- Получение статуса последних workflow runs
+- Отображение ссылок на провальные запуски
+- Поддержка GITHUB_TOKEN для private репозиториев
+
+```bash
+python scripts/monitor_ci.py
+```
+
 ## Примечания
 
 - Все скрипты требуют запущенного сервиса (`docker compose up`)

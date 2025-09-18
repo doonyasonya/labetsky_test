@@ -1,5 +1,8 @@
 # Сервис асинхронной обработки изображений
 
+[![CI](https://github.com/YOUR_USERNAME/labetsky_test/workflows/CI/badge.svg)](https://github.com/YOUR_USERNAME/labetsky_test/actions)
+[![Docker Build](https://img.shields.io/docker/cloud/build/YOUR_USERNAME/image-processing-api)](https://hub.docker.com/r/YOUR_USERNAME/image-processing-api)
+
 Backend-сервис для загрузки и асинхронной обработки изображений с автоматическим созданием миниатюр.
 
 ## Технологии
@@ -141,6 +144,8 @@ GET /health
 - [scripts/check_rabbitmq.py](file://d:\Dev\labetsky_test\scripts\check_rabbitmq.py) - Проверка состояния RabbitMQ
 - [scripts/test_upload.py](file://d:\Dev\labetsky_test\scripts\test_upload.py) - Тест загрузки изображений
 - [scripts/check_ci.py](file://d:\Dev\labetsky_test\scripts\check_ci.py) - Проверка готовности CI/CD
+- [scripts/monitor_ci.py](file://d:\Dev\labetsky_test\scripts\monitor_ci.py) - Мониторинг GitHub Actions
+- [scripts/fix_ci_issues.py](file://d:\Dev\labetsky_test\scripts\fix_ci_issues.py) - Автоматическое исправление проблем
 
 ### 1. Общая диагностика
 ```bash
@@ -514,3 +519,22 @@ pytest tests/test_api.py tests/test_file_endpoints.py -v --cov=app --cov-report=
 # Сборка Docker образа
 docker build -t image-processing-api .
 ```
+
+### Мониторинг и решение проблем
+```bash
+# Проверка статуса GitHub Actions
+python scripts/monitor_ci.py
+
+# Полная проверка CI/CD
+python scripts/check_ci.py
+
+# Автоматическое исправление проблем
+python scripts/fix_ci_issues.py
+```
+
+### Примечания по CI/CD
+
+**Нормальное поведение:**
+- GitHub Actions автоматически очищает контейнеры и сети после выполнения
+- Логи "Stop and remove container" являются частью нормального cleanup процесса
+- Провалы CI могут быть связаны с таймаутами сервисов или несовместимостью зависимостей

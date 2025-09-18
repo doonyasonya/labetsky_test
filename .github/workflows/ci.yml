@@ -71,6 +71,15 @@ jobs:
     - name: Set up environment
       run: |
         mkdir -p storage/{original,thumbs/{100x100,300x300,1200x1200}}
+    
+    - name: Wait for services
+      run: |
+        echo "Waiting for PostgreSQL..."
+        timeout 60 bash -c 'until pg_isready -h localhost -p 5432 -U user; do sleep 2; done'
+        echo "Waiting for RabbitMQ..."
+        timeout 60 bash -c 'until curl -f http://localhost:15672/api/overview -u guest:guest; do sleep 2; done'
+        echo "Services are ready!"
+    
     - name: Run database migrations
       env:
         DATABASE_URL: postgresql+asyncpg://user:password@localhost:5432/images_db
@@ -78,13 +87,21 @@ jobs:
         STORAGE_PATH: ./storage
       run: |
         alembic upgrade head
+    
     - name: Run unit tests
       env:
         DATABASE_URL: postgresql+asyncpg://user:password@localhost:5432/images_db
         RABBITMQ_URL: amqp://guest:guest@localhost:5672/
         STORAGE_PATH: ./storage
       run: |
-        pytest tests/test_api.py tests/test_file_endpoints.py -v --cov=app --cov-report=xml
+        pytest tests/test_api.py tests/test_file_endpoints.py -v --cov=app --cov-report=xml --cov-report=term
+    
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      if: success()
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: false
 
   docker-build:
     runs-on: ubuntu-latest
