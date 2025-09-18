@@ -1,7 +1,7 @@
 # Сервис асинхронной обработки изображений
 
-[![CI](https://github.com/YOUR_USERNAME/labetsky_test/workflows/CI/badge.svg)](https://github.com/YOUR_USERNAME/labetsky_test/actions)
-[![Docker Build](https://img.shields.io/docker/cloud/build/YOUR_USERNAME/image-processing-api)](https://hub.docker.com/r/YOUR_USERNAME/image-processing-api)
+[![CI](https://github.com/doonyasonya/labetsky_test/workflows/CI/badge.svg)](https://github.com/doonyasonya/labetsky_test/actions)
+[![Docker Build](https://img.shields.io/docker/cloud/build/doonyanikitin/image-processing-api)](https://hub.docker.com/r/doonyanikitin/image-processing-api)
 
 Backend-сервис для загрузки и асинхронной обработки изображений с автоматическим созданием миниатюр.
 
