@@ -1,0 +1,30 @@
+[flake8]
+max-line-length = 88
+extend-ignore = 
+    # E203: whitespace before ':'
+    E203,
+    # W503: line break before binary operator
+    W503,
+    # E501: line too long (handled by black)
+    E501
+exclude = 
+    .git,
+    __pycache__,
+    venv,
+    .venv,
+    .pytest_cache,
+    .coverage,
+    build,
+    dist,
+    *.egg-info,
+    # Exclude scripts and alembic from strict linting
+    scripts,
+    alembic
+per-file-ignores =
+    # Tests can ignore some docstring requirements
+    tests/*.py:D100,D101,D102,D103,D104
+    # Allow unused imports in __init__.py
+    __init__.py:F401
+    # Scripts can be more lenient
+    scripts/*.py:D100,D101,D102,D103,D104,W293,W291,W292
+max-complexity = 10
