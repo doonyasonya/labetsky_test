@@ -1,7 +1,9 @@
 # Сервис асинхронной обработки изображений
 
 [![CI](https://github.com/doonyasonya/labetsky_test/workflows/CI/badge.svg)](https://github.com/doonyasonya/labetsky_test/actions)
-[![Docker Build](https://img.shields.io/docker/cloud/build/doonyanikitin/image-processing-api)](https://hub.docker.com/r/doonyanikitin/image-processing-api)
+[![Deploy](https://github.com/doonyasonya/labetsky_test/workflows/Deploy/badge.svg)](https://github.com/doonyasonya/labetsky_test/actions)
+[![Docker Image](https://img.shields.io/docker/image-size/doonyanikitin/image-processing-api/latest)](https://hub.docker.com/r/doonyanikitin/image-processing-api)
+[![Docker Pulls](https://img.shields.io/docker/pulls/doonyanikitin/image-processing-api)](https://hub.docker.com/r/doonyanikitin/image-processing-api)
 
 Backend-сервис для загрузки и асинхронной обработки изображений с автоматическим созданием миниатюр.
 
@@ -495,6 +497,24 @@ graph TB
 
 Проект настроен с GitHub Actions для автоматического тестирования и деплоя:
 
+### Настройка GitHub Secrets
+
+Для корректной работы CI/CD pipeline необходимо настроить следующие секреты в репозитории:
+
+1. Перейдите на https://github.com/YOUR_USERNAME/YOUR_REPO/settings/secrets/actions
+2. Добавьте следующие секреты:
+
+   - **DOCKER_HUB_USERNAME** - ваш логин на Docker Hub (например: `doonyanikitin`)
+   - **DOCKER_HUB_TOKEN** - токен доступа Docker Hub:
+     - Перейдите на https://hub.docker.com/settings/security
+     - Создайте новый Access Token с правом записи
+     - Скопируйте токен и добавьте в секреты
+
+### Статусы workflow
+
+- **CI** - запускается при push в main/develop и PR в main
+- **Deploy** - запускается при push в main или создании тега
+
 ### Проверки качества кода
 - **Flake8** - линтинг кода с конфигурацией в `.flake8`
 - **Автоматические тесты** - unit тесты с покрытием
@@ -530,6 +550,29 @@ python scripts/check_ci.py
 
 # Автоматическое исправление проблем
 python scripts/fix_ci_issues.py
+```
+
+### Диагностика проблем с бейджами
+
+Если бейджи показывают "invalid" или не обновляются:
+
+1. **Проверьте статус workflow** в Actions на GitHub
+2. **Убедитесь, что workflow выполнился хотя бы один раз** - бейджи появляются только после первого запуска
+3. **Проверьте корректность названий workflow** в файлах `.github/workflows/`
+4. **Для Docker Hub бейджей** убедитесь, что образ существует и доступен
+
+**Команды для диагностики:**
+```bash
+# Проверка локальной Docker сборки
+docker build -t image-processing-api .
+docker run --rm image-processing-api python -c "import app.main; print('OK')"
+
+# Проверка подключения к Docker Hub
+echo $DOCKER_HUB_TOKEN | docker login --username $DOCKER_HUB_USERNAME --password-stdin
+
+# Ручная сборка и push (если есть права)
+docker build -t doonyanikitin/image-processing-api:latest .
+docker push doonyanikitin/image-processing-api:latest
 ```
 
 ### Примечания по CI/CD
