@@ -2,8 +2,6 @@
 
 [![CI](https://github.com/doonyasonya/labetsky_test/workflows/CI/badge.svg)](https://github.com/doonyasonya/labetsky_test/actions)
 [![Deploy](https://github.com/doonyasonya/labetsky_test/workflows/Deploy/badge.svg)](https://github.com/doonyasonya/labetsky_test/actions)
-[![Docker Image](https://img.shields.io/docker/image-size/doonyanikitin/image-processing-api/latest)](https://hub.docker.com/r/doonyanikitin/image-processing-api)
-[![Docker Pulls](https://img.shields.io/docker/pulls/doonyanikitin/image-processing-api)](https://hub.docker.com/r/doonyanikitin/image-processing-api)
 
 Backend-сервис для загрузки и асинхронной обработки изображений с автоматическим созданием миниатюр.
 
